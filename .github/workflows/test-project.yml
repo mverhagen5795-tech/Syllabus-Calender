@@ -1,4 +1,4 @@
-# .github/workflows/tests.yml
+# .github/workflows/test-project.yml
 
 # This workflow automatically runs the project's Python tests
 name: Test project
