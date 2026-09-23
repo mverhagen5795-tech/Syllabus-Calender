@@ -37,3 +37,4 @@ jobs:
       # Uses pytest to find and run all automated tests
       - name: Run automated tests
         run: pytest
+
