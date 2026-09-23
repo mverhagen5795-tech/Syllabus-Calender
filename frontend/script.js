@@ -24,3 +24,14 @@ form.addEventListener("submit", (e) => {
     newEvent.course + " - " + newEvent.title + " - " + newEvent.date;
   document.getElementById("event-list").appendChild(item);
 });
+
+fetch("http://127.0.0.1:5000/events")
+  .then((response) => response.json())
+  .then((events) => {
+    events.forEach((event) => {
+      const item = document.createElement("li");
+      item.textContent = event.course + " - " + event.title + " - " + event.date;
+      document.getElementById("event-list").appendChild(item);
+    });
+  });
+
