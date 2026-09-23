@@ -13,6 +13,12 @@ form.addEventListener("submit", (e) => {
   };
   console.log(newEvent);
 
+  fetch("http://127.0.0.1:5000/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newEvent),
+  });
+
   const item = document.createElement("li");
   item.textContent =
     newEvent.course + " - " + newEvent.title + " - " + newEvent.date;
