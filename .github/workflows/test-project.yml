@@ -1,0 +1,39 @@
+# .github/workflows/test-project.yml
+
+# This workflow automatically runs the project's Python tests
+name: Test project
+
+# Controls when the workflow will run
+on:
+  # Runs whenever a pull request targets the main branch
+  pull_request:
+    branches: ["main"]
+
+  # Allows the workflow to be run manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains one job called "test"
+  test:
+    # Uses a GitHub-hosted computer running Ubuntu
+    runs-on: ubuntu-latest
+
+    # Steps are executed in order as part of the test job
+    steps:
+      # Downloads the repository code onto the Ubuntu runner
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Installs Python 3.12 on the runner
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Installs the project's dependencies, including pytest
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Uses pytest to find and run all automated tests
+      - name: Run automated tests
+        run: pytest
