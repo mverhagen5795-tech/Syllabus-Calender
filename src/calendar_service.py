@@ -1,5 +1,5 @@
 # Syncs exam changes to the student's Google Calendar
-class CalendarService:
+class GoogleCalendarService:
 
     def __init__(self, calendar_id: str, email: str):
         self._calendar_id = calendar_id
