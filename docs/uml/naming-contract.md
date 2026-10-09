@@ -6,7 +6,7 @@ Classes used by more than one slice. Only the owner writes the code stub for tha
 |-----------------|---------|------------------------------|
 | Exam            | Rory    | Rory, Ubay, Deandre, Gabe    |
 | Student         | Gabe    | Rory, Ubay, Deandre, Gabe    |
-| CalendarService | Deandre | Rory, Deandre                |
+| GoogleCalendarService | Deandre | Rory, Deandre                |
 
 ## Exam attributes
 - exam_id: int
@@ -18,7 +18,7 @@ Classes used by more than one slice. Only the owner writes the code stub for tha
 - student_id: int
 - email: str
 
-## CalendarService attributes
+## GoogleCalendarService attributes
 - calendar_id: str
 
 ## Rules
