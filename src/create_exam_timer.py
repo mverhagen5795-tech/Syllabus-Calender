@@ -7,4 +7,4 @@ class create_exam_timer:
 
     def createTimer(self):
         # TODO: Calculate remaining time until exam
-         pas
+         pass
