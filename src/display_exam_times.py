@@ -1,7 +1,7 @@
 class DisplayExamTimes:
-    def_init_self():
-        self.days = 0;
-        self.hours = 0;
+    (def_init_self()):
+        self.days = 0
+        self.hours = 0
         self.minutes = 0
     
     def displayTimes(self, total_seconds):
