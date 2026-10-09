@@ -1,4 +1,4 @@
-class display_exam_times:
+class DisplayExamTimes:
     def__init__(self):
         self.days = 0
         self.hours = 0
