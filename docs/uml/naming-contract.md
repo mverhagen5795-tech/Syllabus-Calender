@@ -18,5 +18,8 @@ Classes used by more than one slice. Only the owner writes the code stub for tha
 - student_id: int
 - email: str
 
+## CalendarService attributes
+- calendar_id: str
+
 ## Rules
 - If you need a shared class that is not on this list, add it here and tell the team the same day.
