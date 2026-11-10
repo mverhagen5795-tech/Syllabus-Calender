@@ -7,10 +7,19 @@
 
 | Area of the system | Owner | ID prefix |
 |---|---|---|
-| [example: Accounts and login] | [name] | [initials, like MG] |
-| | | |
-| | | |
-| | | |
+| user interface | Finja Bruenen | FB |
+| data storage | Poulina Reipolska | PR |
+| google sync | Tarran Thomas | TT |
+| main feature | Matthew Verhagen | MV |
+
+<!-- 
+user interface: CR-5
+google sync: CR-2, CR-4
+main feature: CR-3, TC-2, TC-3 
+data storage: CR-1, TC-1
+ -->
+
+
 
 <!--
 RULES
