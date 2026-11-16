@@ -32,27 +32,28 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: user interface (Finja Bruenen)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| G-XX-01 | | |
+| G-FB-01 | Student | Enter exam details and view the exam list. |
+
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| REQ-XX-01 | | | |
-| REQ-XX-02 | | | |
-| REQ-XX-03 | | | |
+| REQ-FB-01 | The system shall provide Course and Title text inputs, a Date input, and an Add Event button on the exam page. | Confirmed | New |
+| REQ-FB-02 | The system shall display each exam returned by the initial `/events` request in the exam list as `course - title - date`. | Confirmed | New |
+| REQ-FB-03 | The system shall display the message "Could not load saved exams from the Flask backend." when the initial `/events` request fails. | Confirmed | New |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| NFR-XX-01 | | | |
+| NFR-FB-01 | The system shall use the configured backend base URL for both exam-loading and exam-submission requests to the `/events` endpoint. | Suspected bug | CR-5 (Unconfirmed): System shall send requests to a configurable ip address |
 
 ### Example of a Good Rewrite
 
