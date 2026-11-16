@@ -113,24 +113,24 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Main Feature (Matthew Verhagen)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+|G-MV-01|Student |Students are required to sumbit an exam with its course, title, and date and then get confirmation that that information was saved to their calander |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+|REQ-MV-01 |When a client sends POST /events with an empty, course, title, or date, the system shall return HTTP status 400 and the JSON error course,title, and date required |Confirmed |Cr-3: System shall reject an exam with no course name |
+|REQ-MV-02 |When a client sends POST /events with course,title, and date fields that arent empty, the system shall save the exam and return HTTP status 201 with the submitted exam fields in the JSON |Confirmed |New |
+|REQ-MV-03 |When a cleint request GET /events, the system shall return HTTP status 200 and a JSON array containing the exams saved locally |Confirmed |New |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+|NFR-MV-01 |the /events API shall use JSON for request and response data, inclduing JSON error responses for invalid requests|Confirmed |New |
