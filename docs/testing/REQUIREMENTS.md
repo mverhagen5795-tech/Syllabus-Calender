@@ -87,27 +87,28 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: [Google Sync] ([Tarran Thomas])
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+|G-TT-01|Student|Students want their saved exams to appear in Google Calendar so they can keep track of upcoming exams without entering them manually.|
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+|TT-01|When a user has authorized Google Calendar access, the system shall create a Google Calendar event for each submitted exam.|Confirmed*|CR-2: System shall create a Google Calendar event for each exam.|
+|TT-02|If Google Calendar authorization is unavailable or event creation fails, the system shall still save the submitted exam in the local database.|Confirmed*|CR-4: System shall keep an exam while reporting a Google Calendar sync error.|
+|TT-03|If Google Calendar synchronization fails, the system shall return HTTP status 201 and include "calendar_added": false in the response.|Confirmed*|CR-4: System shall keep an exam while reporting a Google Calendar sync error.|
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+|NFR-TT-01|The system shall request only the Google Calendar Events permission (calendar.events) when asking users to authorize Google Calendar access.|Confirmed*|New|
+
 
 ---
 
