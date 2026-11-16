@@ -64,27 +64,27 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: [Data Storage] ([Poulina Reipolska])
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+|G-PR-01|Student|Exames that are added will stay even if the servers are reset, no making students filling out tables multiple times|
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+|REQ-PR-01|When a valid exam (course, title, date) is submitted, exactly one matching row is saved and GET /events returns it with the same course, title, and date.|Confirmed|CR-1|
+|REQ-PR-02|After the Flask server is stopped and restarted from the same folder, every exam saved before the restart is still returned by GET /events.|Confirmed |New|
+|REQ-PR-03|When an exam with an empty course name is submitted, the system returns HTTP 400 and no row is added to the events table.|Confirmed|CR-3|
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+|NFR-PR-01|A course name containing SQL text (such as x'); DROP TABLE events;--) is stored as plain text, and the events table still exists afterward.|Confirmed|New|
 
 ---
 
