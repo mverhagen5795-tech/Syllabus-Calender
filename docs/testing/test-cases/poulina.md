@@ -70,8 +70,8 @@
 **Actual result:** GET /events returned both exams. The second has course exactly x'); DROP TABLE events;--, title Midterm, date 2025-11-06. The events table still exists and the first exam is intact. "POST /events HTTP/1.1" 201  
 **Status:** Pass  
 **Severity:** N/a  
-**V or V:**  
-**GitHub Issue:**
+**V or V:** N/a
+**GitHub Issue:** N/a
 
 ---
 
