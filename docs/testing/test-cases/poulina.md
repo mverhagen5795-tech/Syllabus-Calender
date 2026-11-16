@@ -33,9 +33,13 @@ Steps:
 
 Expected result: POST /events returns 200 or 201. GET /events still works and lists both exams, including one whose course is exactly x'); DROP TABLE events;--. Actual result: GET /events returned both exams. The second has course exactly x'); DROP TABLE events;--, title Midterm, date 2025-11-06. The events table still exists and the first exam is intact. "POST /events HTTP/1.1" 201  Status: Pass Severity: N/a V or V: GitHub Issue:
 
-Test ID: From Part 6: (old test number, or New) Written by: Title: Traces to: Test type: Preconditions: Test data:
+Test ID: From Part 6: (old test number, or New) Written by: Poulina Reipolska Title: A student’s saved exams are still there after the server restarts Traces to: G-PR-01, REQ-PR-02 Test type: Acceptance Preconditions: Flask server running. GET /events lists the two exams saved in TC-PR-01 and TC-PR-03 Test data: The exams already saved
 
-Steps: 1. 2. 3.
+Steps:
+1. Request http://127.0.0.1:5000/events and note the two exams listed.
+2. Stop the Flask server with Ctrl+C.
+3. Start it again from the same project folder (export OAUTHLIB_INSECURE_TRANSPORT=1, then python3 app.py).
+4. Request http://127.0.0.1:5000/events again (browser or curl).
 
-Expected result: Actual result: Status: Severity: V or V: GitHub Issue:
+Expected result: GET /events lists the same two exams as before the restart, with the same course, title, and date Actual result: After stopping Flask with Ctrl+C and restarting it from the same folder, curl http://127.0.0.1:5000/events returned both saved exams with the same course, title, and date. The browser showed an HTTP 403 at one point, but no matching request appeared in the Flask log, so the response did not come from the app. Status: Pass Severity: N/a V or V: N/a GitHub Issue: N/a
 
