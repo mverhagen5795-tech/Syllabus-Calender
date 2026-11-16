@@ -76,7 +76,7 @@ RULES
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
 |REQ-PR-01|When a valid exam (course, title, date) is submitted, exactly one matching row is saved and GET /events returns it with the same course, title, and date.|Confirmed|CR-1|
-|REQ-PR-02|After the Flask server is stopped and restarted from the same folder, every exam saved before the restart is still returned by GET /events.|Confirmed | |
+|REQ-PR-02|After the Flask server is stopped and restarted from the same folder, every exam saved before the restart is still returned by GET /events.|Confirmed |New|
 |REQ-PR-03|When an exam with an empty course name is submitted, the system returns HTTP 400 and no row is added to the events table.|Confirmed|CR-3|
 
 ### Non-Functional Requirements
