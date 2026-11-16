@@ -23,7 +23,7 @@ Steps:
 
 Expected result: POST/events returns 201 or 200 and GET/events returns one exam Actual result: GET /events returned one exam: course cs 250, title Midterm, date 2025-10-31, matching the input. Post /events returned 201 Status: Pass Severity: N/a V or V: N/a GitHub Issue: N/a
 
-Test ID: TC-PR-03 From Part 6: (old test number, or New) Written by: Title: SQL text in a course name is stored as plain text Traces to: NFR-PR-02 Test type: Security Preconditions: Flask server running + events.db exists and contains the cs 250 exam from TC-PR-01  Test data: Course: x'); DROP TABLE events;--, Title: Midterm, Date: 11/06/2025 (stored as 2025-11-06)
+Test ID: TC-PR-03 From Part 6: (old test number, or New) Written by: Title: SQL text in a course name is stored as plain text Traces to: NFR-PR-01 Test type: Security Preconditions: Flask server running + events.db exists and contains the cs 250 exam from TC-PR-01  Test data: Course: x'); DROP TABLE events;--, Title: Midterm, Date: 11/06/2025 (stored as 2025-11-06)
 
 Steps: 
 1. Open frontend/index.html.
@@ -33,7 +33,7 @@ Steps:
 
 Expected result: POST /events returns 200 or 201. GET /events still works and lists both exams, including one whose course is exactly x'); DROP TABLE events;--. Actual result: GET /events returned both exams. The second has course exactly x'); DROP TABLE events;--, title Midterm, date 2025-11-06. The events table still exists and the first exam is intact. "POST /events HTTP/1.1" 201  Status: Pass Severity: N/a V or V: GitHub Issue:
 
-Test ID: From Part 6: (old test number, or New) Written by: Poulina Reipolska Title: A student’s saved exams are still there after the server restarts Traces to: G-PR-01, REQ-PR-02 Test type: Acceptance Preconditions: Flask server running. GET /events lists the two exams saved in TC-PR-01 and TC-PR-03 Test data: The exams already saved
+Test ID: TC-PR-04 From Part 6: (old test number, or New) Written by: Poulina Reipolska Title: A student’s saved exams are still there after the server restarts Traces to: G-PR-01, REQ-PR-02 Test type: Acceptance Preconditions: Flask server running. GET /events lists the two exams saved in TC-PR-01 and TC-PR-03 Test data: The exams already saved
 
 Steps:
 1. Request http://127.0.0.1:5000/events and note the two exams listed.
