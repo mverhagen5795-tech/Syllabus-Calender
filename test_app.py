@@ -1,5 +1,7 @@
 # Import our Flask app so we can test it
 from app import app
+from src.create_exam_timer import CreateExamTimer
+from src.display_exam_times import DisplayExamTimes
 
 # REQ-4 test: add an event and check it comes back from /events
 def test_req4_add_event_and_see_it():
@@ -14,3 +16,20 @@ def test_req4_add_event_and_see_it():
 
     # assert = "this must be true". If the event is in the list, the test passes
     assert {"course": "CS 250", "title": "Test Exam", "date": "2026-11-01"} in events
+
+
+def test_create_exam_timer_constructor():
+    end_date = "2026-11-01"
+
+    timer = CreateExamTimer(end_date)
+
+    assert timer.endDate == end_date
+    assert timer.startDate is not None
+
+
+def test_display_exam_times_constructor():
+    display = DisplayExamTimes()
+
+    assert display.days == 0
+    assert display.hours == 0
+    assert display.minutes == 0

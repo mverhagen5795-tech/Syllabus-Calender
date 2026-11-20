@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class CreateExamTimer:
-    def__init__(self, endDate):
+    def __init__(self, endDate):
         self.startDate = datetime.now()
         self.endDate = endDate
 
