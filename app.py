@@ -7,6 +7,7 @@ from src.exam import Exam
 from src.exam_database import ExamDatabase
 from src.google_calendar_service import GoogleCalendarService
 from werkzeug.middleware.proxy_fix import ProxyFix
+from datetime import date as Date
 
 
 app = Flask(__name__)
@@ -96,9 +97,20 @@ def add_event():
         "date",
     )
 
-    if any(not data.get(field) for field in required_fields):
+    if any(
+    not isinstance(data.get(field), str)
+    or not data[field].strip()
+    for field in required_fields
+        ):
         return jsonify({
             "error": "course, title, and date are required"
+        }), 400
+
+    try:
+        Date.fromisoformat(data["date"])
+    except ValueError:
+        return jsonify({
+            "error": "date must be in YYYY-MM-DD format"
         }), 400
 
     exam = Exam(
