@@ -47,3 +47,12 @@ class ExamDatabase:
             Exam(exam_id=row[0], course=row[1], title=row[2], date=row[3])
             for row in rows
         ]
+
+    def exam_exists(self, course: str, title: str, date: str) -> bool:
+            """Return True if an exam with this course, title, and date is stored."""
+            with self._connect() as db:
+                row = db.execute(
+                    "SELECT 1 FROM events WHERE course = ? AND title = ? AND date = ? LIMIT 1",
+                    (course, title, date),
+                ).fetchone()
+            return row is not None
