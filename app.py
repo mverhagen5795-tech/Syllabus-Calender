@@ -1,14 +1,13 @@
 import os
-from urllib import response
 
 from flask import Flask, request, jsonify, redirect, session, url_for
 from flask_cors import CORS
+from datetime import date as Date
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from src.exam import Exam
 from src.exam_database import ExamDatabase
 from src.google_calendar_service import GoogleCalendarService
-from werkzeug.middleware.proxy_fix import ProxyFix
-from datetime import date as Date
 
 
 app = Flask(__name__, static_folder="frontend", static_url_path="")
@@ -96,10 +95,10 @@ def add_event():
     )
 
     if any(
-    not isinstance(data.get(field), str)
-    or not data[field].strip()
-    for field in required_fields
-        ):
+        not isinstance(data.get(field), str)
+        or not data[field].strip()
+        for field in required_fields
+    ):
         return jsonify({
             "error": "course, title, and date are required"
         }), 400
@@ -118,6 +117,11 @@ def add_event():
         date=data["date"],
     )
 
+    if exam_database.exam_exists(exam.course, exam.title, exam.date):
+        return jsonify({
+            "error": "This exam already exists"
+        }), 409
+
     exam_database.save_exam(exam)
 
     calendar_added = google_calendar_service.add_exam(exam)
@@ -127,14 +131,18 @@ def add_event():
 
     if not calendar_added:
         response["calendar_error"] = (
-        google_calendar_service.last_error
-        or "Unable to add the exam to Google Calendar."
+            getattr(google_calendar_service, "last_error", None)
+            or "Unable to add the exam to Google Calendar."
+        )
+
+    event_link = getattr(
+        google_calendar_service,
+        "last_event_link",
+        None
     )
 
-    if google_calendar_service.last_event_link:
-        response["calendar_link"] = (
-            google_calendar_service.last_event_link
-        )
+    if calendar_added and event_link:
+        response["calendar_link"] = event_link
 
     return jsonify(response), 201
 
