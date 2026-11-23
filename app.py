@@ -130,19 +130,19 @@ def add_event():
     response["calendar_added"] = calendar_added
 
     if not calendar_added:
-    response["calendar_error"] = (
-        getattr(google_calendar_service, "last_error", None)
-        or "Unable to add the exam to Google Calendar."
+        response["calendar_error"] = (
+            getattr(google_calendar_service, "last_error", None)
+            or "Unable to add the exam to Google Calendar."
+        )
+
+    event_link = getattr(
+        google_calendar_service,
+        "last_event_link",
+        None
     )
 
-event_link = getattr(
-    google_calendar_service,
-    "last_event_link",
-    None
-)
-
-if calendar_added and event_link:
-    response["calendar_link"] = event_link
+    if calendar_added and event_link:
+        response["calendar_link"] = event_link
 
     return jsonify(response), 201
 
