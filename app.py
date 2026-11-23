@@ -120,7 +120,7 @@ def add_event():
     response = exam.to_dict()
     response["calendar_added"] = calendar_added
 
-    if google_calendar_service.last_event_link:
+    if calendar_added and google_calendar_service.last_event_link:
         response["calendar_link"] = (
             google_calendar_service.last_event_link
         )
