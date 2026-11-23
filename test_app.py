@@ -33,3 +33,86 @@ def test_display_exam_times_constructor():
     assert display.days == 0
     assert display.hours == 0
     assert display.minutes == 0
+# PR4 Bug 1 test: verify Google Calendar failures are communicated
+def test_calendar_failure_provides_error_message(monkeypatch):
+    client = app.test_client()
+
+    # Simulate Google Calendar insertion failing
+    monkeypatch.setattr(
+        "app.google_calendar_service.add_exam",
+        lambda exam: False
+    )
+
+    # Prevent an old successful event link from affecting the test
+    monkeypatch.setattr(
+        "app.google_calendar_service.last_event_link",
+        None
+    )
+
+    # Submit an exam
+    response = client.post(
+        "/events",
+        json={
+            "course": "CS 250",
+            "title": "Calendar Failure Test",
+            "date": "2026-12-01"
+        }
+    )
+
+    result = response.get_json()
+
+    # The exam should still be saved locally
+    assert response.status_code == 201
+    assert result["calendar_added"] is False
+
+    # The application should explain why calendar insertion failed
+    assert result.get("calendar_error")
+
+
+def test_oauth_callback_redirects_to_home(monkeypatch):
+    client = app.test_client()
+
+    # Simulate successful Google authorization
+    monkeypatch.setattr(
+        "app.google_calendar_service.finish_authorization",
+        lambda **kwargs: None
+    )
+
+    # Simulate an existing OAuth session
+    with client.session_transaction() as session:
+        session["oauth_state"] = "test-state"
+        session["oauth_code_verifier"] = "test-verifier"
+
+    response = client.get("/oauth2callback")
+
+    assert response.status_code == 302
+    assert response.headers["Location"] == "/"
+
+def test_whitespace_only_course_is_rejected():
+    client = app.test_client()
+
+    response = client.post(
+        "/events",
+        json={
+            "course": "   ",
+            "title": "Midterm",
+            "date": "2026-11-05",
+        },
+    )
+
+    assert response.status_code == 400
+
+
+def test_invalid_date_is_rejected():
+    client = app.test_client()
+
+    response = client.post(
+        "/events",
+        json={
+            "course": "CS 250",
+            "title": "Midterm",
+            "date": "not-a-date",
+        },
+    )
+
+    assert response.status_code == 400

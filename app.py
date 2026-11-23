@@ -1,4 +1,5 @@
 import os
+from urllib import response
 
 from flask import Flask, request, jsonify, redirect, session, url_for
 from flask_cors import CORS
@@ -7,9 +8,10 @@ from src.exam import Exam
 from src.exam_database import ExamDatabase
 from src.google_calendar_service import GoogleCalendarService
 from werkzeug.middleware.proxy_fix import ProxyFix
+from datetime import date as Date
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="frontend", static_url_path="")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 app.secret_key = os.getenv(
@@ -25,7 +27,7 @@ google_calendar_service = GoogleCalendarService()
 
 @app.route("/")
 def home():
-    return "Backend is running"
+    return app.send_static_file("index.html")
 
 
 @app.route("/authorize")
@@ -80,10 +82,7 @@ def oauth2callback():
             "error": f"Google authorization failed: {error}"
         }), 400
 
-    return (
-        "Google Calendar connected. "
-        "You can return to the syllabus page."
-    )
+    return redirect(url_for("home"))
 
 
 @app.route("/events", methods=["POST"])
@@ -96,9 +95,20 @@ def add_event():
         "date",
     )
 
-    if any(not data.get(field) for field in required_fields):
+    if any(
+    not isinstance(data.get(field), str)
+    or not data[field].strip()
+    for field in required_fields
+        ):
         return jsonify({
             "error": "course, title, and date are required"
+        }), 400
+
+    try:
+        Date.fromisoformat(data["date"])
+    except ValueError:
+        return jsonify({
+            "error": "date must be in YYYY-MM-DD format"
         }), 400
 
     exam = Exam(
@@ -114,6 +124,12 @@ def add_event():
 
     response = exam.to_dict()
     response["calendar_added"] = calendar_added
+
+    if not calendar_added:
+        response["calendar_error"] = (
+        google_calendar_service.last_error
+        or "Unable to add the exam to Google Calendar."
+    )
 
     if google_calendar_service.last_event_link:
         response["calendar_link"] = (
