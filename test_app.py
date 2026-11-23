@@ -1,4 +1,5 @@
 # Import our Flask app so we can test it
+from src.exam_database import ExamDatabase
 from app import app
 from src.create_exam_timer import CreateExamTimer
 from src.display_exam_times import DisplayExamTimes
@@ -34,8 +35,14 @@ def test_display_exam_times_constructor():
     assert display.hours == 0
     assert display.minutes == 0
 # PR4 Bug 1 test: verify Google Calendar failures are communicated
-def test_calendar_failure_provides_error_message(monkeypatch):
+def test_calendar_failure_provides_error_message(monkeypatch, tmp_path):
     client = app.test_client()
+
+    # Give this test its own temporary database
+    monkeypatch.setattr(
+        "app.exam_database",
+        ExamDatabase(str(tmp_path / "test_events.db"))
+    )
 
     # Simulate Google Calendar insertion failing
     monkeypatch.setattr(
@@ -43,13 +50,11 @@ def test_calendar_failure_provides_error_message(monkeypatch):
         lambda exam: False
     )
 
-    # Prevent an old successful event link from affecting the test
     monkeypatch.setattr(
         "app.google_calendar_service.last_event_link",
         None
     )
 
-    # Submit an exam
     response = client.post(
         "/events",
         json={
@@ -61,11 +66,8 @@ def test_calendar_failure_provides_error_message(monkeypatch):
 
     result = response.get_json()
 
-    # The exam should still be saved locally
     assert response.status_code == 201
     assert result["calendar_added"] is False
-
-    # The application should explain why calendar insertion failed
     assert result.get("calendar_error")
 
 
