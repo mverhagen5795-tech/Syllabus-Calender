@@ -25,6 +25,7 @@ class GoogleCalendarService:
         self.token_file = token_file
         self.credentials = None
         self.last_event_link = None
+        self.last_error = None
 
     def authorize_user(self) -> bool:
         """Load or refresh saved Google OAuth credentials."""
@@ -122,10 +123,15 @@ class GoogleCalendarService:
             },
         }
 
+    
     def add_exam(self, exam: Exam) -> bool:
         """Add an exam to Google Calendar."""
 
+        self.last_error = None
+        self.last_event_link = None
+
         if not self.authorize_user():
+            self.last_error = "Google Calendar authorization failed. Please reconnect your account."
             return False
 
         try:
@@ -148,5 +154,6 @@ class GoogleCalendarService:
             self.last_event_link = created_event.get("htmlLink")
             return True
 
-        except (HttpError, TimeoutError, OSError):
+        except (HttpError, TimeoutError, OSError) as error:
+            self.last_error = f"Google Calendar insertion failed: {error}"
             return False
