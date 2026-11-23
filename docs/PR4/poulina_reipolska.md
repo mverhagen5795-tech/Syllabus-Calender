@@ -19,10 +19,10 @@
 - PR: [<link to PR>](https://github.com/mverhagen5795-tech/Syllabus-Calender/issues/2)
 
 **Before:**
-![Issue <N> before](screenshots/poulina_reipolska_issue2_before.png)
+![Issue 2 before](screenshots/poulina_reipolska_issue2_before.png)
 
 **After:**
-![Issue <N> after](screenshots/poulina_reipolska_issue2_after.png)
+![Issue 2 after](screenshots/poulina_reipolska_issue2_after.png)
 
 **Bucket:** Code bug. The test expects no `calendar_link` when `calendar_added` is false, which is correct, but the code returned the previous exam's link.
 
