@@ -1,8 +1,8 @@
 # Poulina Reipolska
 
 ## Bug 1: Duplicate exams create duplicate Google Calendar events
-- Issue: <link to Issue #N>
-- PR: [<link to PR>](https://github.com/mverhagen5795-tech/Syllabus-Calender/issues/3)
+- Issue: https://github.com/mverhagen5795-tech/Syllabus-Calender/issues/3
+- PR: 
 
 **Before:**
 ![Issue 3 before](screenshots/poulina_reipolska_issue3_before.png)
@@ -15,8 +15,8 @@
 **AI disclosure:** 
 
 ## Bug 2: Failed calendar sync returns the previous event's link
-- Issue: <link to Issue #N>
-- PR: [<link to PR>](https://github.com/mverhagen5795-tech/Syllabus-Calender/issues/2)
+- Issue: https://github.com/mverhagen5795-tech/Syllabus-Calender/issues/2
+- PR: 
 
 **Before:**
 ![Issue 2 before](screenshots/poulina_reipolska_issue2_before.png)
