@@ -1,4 +1,5 @@
 import os
+from urllib import response
 
 from flask import Flask, request, jsonify, redirect, session, url_for
 from flask_cors import CORS
@@ -114,6 +115,12 @@ def add_event():
 
     response = exam.to_dict()
     response["calendar_added"] = calendar_added
+
+    if not calendar_added:
+        response["calendar_error"] = (
+        google_calendar_service.last_error
+        or "Unable to add the exam to Google Calendar."
+    )
 
     if google_calendar_service.last_event_link:
         response["calendar_link"] = (
