@@ -50,3 +50,23 @@ def test_calendar_failure_provides_error_message(monkeypatch):
 
     # The application should explain why calendar insertion failed
     assert result.get("calendar_error")
+
+
+def test_oauth_callback_redirects_to_home(monkeypatch):
+    client = app.test_client()
+
+    # Simulate successful Google authorization
+    monkeypatch.setattr(
+        "app.google_calendar_service.finish_authorization",
+        lambda **kwargs: None
+    )
+
+    # Simulate an existing OAuth session
+    with client.session_transaction() as session:
+        session["oauth_state"] = "test-state"
+        session["oauth_code_verifier"] = "test-verifier"
+
+    response = client.get("/oauth2callback")
+
+    assert response.status_code == 302
+    assert response.headers["Location"] == "/"

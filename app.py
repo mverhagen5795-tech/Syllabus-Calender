@@ -10,7 +10,7 @@ from src.google_calendar_service import GoogleCalendarService
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="frontend", static_url_path="")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 app.secret_key = os.getenv(
@@ -26,7 +26,7 @@ google_calendar_service = GoogleCalendarService()
 
 @app.route("/")
 def home():
-    return "Backend is running"
+    return app.send_static_file("index.html")
 
 
 @app.route("/authorize")
@@ -81,10 +81,7 @@ def oauth2callback():
             "error": f"Google authorization failed: {error}"
         }), 400
 
-    return (
-        "Google Calendar connected. "
-        "You can return to the syllabus page."
-    )
+    return redirect(url_for("home"))
 
 
 @app.route("/events", methods=["POST"])
