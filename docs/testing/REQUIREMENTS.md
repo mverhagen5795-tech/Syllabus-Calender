@@ -32,27 +32,28 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: user interface (Finja Bruenen)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| G-XX-01 | | |
+| G-FB-01 | Student | Enter exam details and view the exam list. |
+
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| REQ-XX-01 | | | |
-| REQ-XX-02 | | | |
-| REQ-XX-03 | | | |
+| REQ-FB-01 | The system shall provide Course and Title text inputs, a Date input, and an Add Event button on the exam page. | Confirmed | New |
+| REQ-FB-02 | The system shall display each exam returned by the initial `/events` request in the exam list as `course - title - date`. | Confirmed | New |
+| REQ-FB-03 | The system shall display the message "Could not load saved exams from the Flask backend." when the initial `/events` request fails. | Confirmed | New |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| NFR-XX-01 | | | |
+| NFR-FB-01 | The system shall use the configured backend base URL for both exam-loading and exam-submission requests to the `/events` endpoint. | Suspected bug | CR-5 (Unconfirmed): System shall send requests to a configurable ip address |
 
 ### Example of a Good Rewrite
 
@@ -63,27 +64,27 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: [Data Storage] ([Poulina Reipolska])
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+|G-PR-01|Student|Exames that are added will stay even if the servers are reset, no making students filling out tables multiple times|
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+|REQ-PR-01|When a valid exam (course, title, date) is submitted, exactly one matching row is saved and GET /events returns it with the same course, title, and date.|Confirmed|CR-1|
+|REQ-PR-02|After the Flask server is stopped and restarted from the same folder, every exam saved before the restart is still returned by GET /events.|Confirmed |New|
+|REQ-PR-03|When an exam with an empty course name is submitted, the system returns HTTP 400 and no row is added to the events table.|Confirmed|CR-3|
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+|NFR-PR-01|A course name containing SQL text (such as x'); DROP TABLE events;--) is stored as plain text, and the events table still exists afterward.|Confirmed|New|
 
 ---
 
@@ -112,24 +113,24 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Main Feature (Matthew Verhagen)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+|G-MV-01|Student |Students are required to sumbit an exam with its course, title, and date and then get confirmation that that information was saved to their calander |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+|REQ-MV-01 |When a client sends POST /events with an empty, course, title, or date, the system shall return HTTP status 400 and the JSON error course,title, and date required |Confirmed |Cr-3: System shall reject an exam with no course name |
+|REQ-MV-02 |When a client sends POST /events with course,title, and date fields that arent empty, the system shall save the exam and return HTTP status 201 with the submitted exam fields in the JSON |Confirmed |New |
+|REQ-MV-03 |When a cleint request GET /events, the system shall return HTTP status 200 and a JSON array containing the exams saved locally |Confirmed |New |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+|NFR-MV-01 |the /events API shall use JSON for request and response data, inclduing JSON error responses for invalid requests|Confirmed |New |

@@ -70,3 +70,32 @@ def test_oauth_callback_redirects_to_home(monkeypatch):
 
     assert response.status_code == 302
     assert response.headers["Location"] == "/"
+
+def test_whitespace_only_course_is_rejected():
+    client = app.test_client()
+
+    response = client.post(
+        "/events",
+        json={
+            "course": "   ",
+            "title": "Midterm",
+            "date": "2026-11-05",
+        },
+    )
+
+    assert response.status_code == 400
+
+
+def test_invalid_date_is_rejected():
+    client = app.test_client()
+
+    response = client.post(
+        "/events",
+        json={
+            "course": "CS 250",
+            "title": "Midterm",
+            "date": "not-a-date",
+        },
+    )
+
+    assert response.status_code == 400
