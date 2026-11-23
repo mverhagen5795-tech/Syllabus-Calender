@@ -110,6 +110,11 @@ def add_event():
 
     exam_database.save_exam(exam)
 
+    if exam_database.exam_exists(exam.course, exam.title, exam.date):
+        return jsonify({
+            "error": "This exam already exists"
+    }), 409
+
     calendar_added = google_calendar_service.add_exam(exam)
 
     response = exam.to_dict()
